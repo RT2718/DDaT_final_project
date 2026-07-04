@@ -140,13 +140,13 @@ pip install numpy scipy pyaudio pyserial matplotlib keyboard
 ```
 
 **Control tier (firmware):**
-Follow the installation guidelines layed out in 
+Follow the installation guidelines laid out in the [X-NUCLEO Installation Guide](docs/x-nucleo-installation-guide.pdf). After extracting the x-cube-spn1.zip onto your PC, replace the main.c, l6474_target_config.h and stm32f4xx_it.c files with the ones from this repo.  
 
 ## Setup
 
 1. **Wiring.** Connect the ReSpeaker array to the host PC by USB. Connect the STM32 to
    the host by USB/serial. Mount the X-NUCLEO-IHM01A1 on the Nucleo board and connect
-   the pan and tilt motors.
+   the pan and tilt stepper motors (see [X-NUCLEO Installation Guide](docs/x-nucleo-installation-guide.pdf)). 
 2. **Firmware.** Open the `firmware/` project in STM32CubeIDE, build, and flash it to
    the board.
 3. **Perception.** Install the Python dependencies (above) and set the serial port for
