@@ -249,10 +249,14 @@ Supervisor: **Arkady Rafalovich** · Tel Aviv University Project Lab.
 
 ## References
 
-- Knapp, C. & Carter, G. *The generalized correlation method for estimation of time
-  delay.* IEEE Trans. ASSP 24(4), 1976.
-- Oppenheim, A. V. & Schafer, R. W. *Discrete-Time Signal Processing.* Pearson, 2009.
+- Knapp, C., & Carter, G. *The generalized correlation method for estimation of time delay.* IEEE Transactions on Acoustics, Speech, and Signal Processing 24.4 (1976): 320-327.
+- Oppenheim, A. V., & Schafer, R. W. *Discrete-Time Signal Processing.* Pearson, 2009.
 - STMicroelectronics. *STM32 HAL Driver Reference Manual.*
+- *x-nucleo-ihm01a1 Quick Start Guide*, May 16, 2016.
+- Greco, D. *Robust Blind Algorithm for DOA Estimation Using TDOA Consensus.* Acoustics 2025, 7, 52.
+- Krishnaraj Varma, Takeshi Ikuma, & A. A. (Louis) Beex. *Robust TDE-Based DOA Estimation For Compact AUDIO Arrays.* Second IEEE Sensor Array and Multichannel Signal Processing Workshop (SAM2002), 4-6 August, 2002.
+- J. O. Smith. "Quadratic Interpolation of Spectral Peaks," *Spectral Audio Signal Processing*. [Available online](https://www.dsprelated.com/freebooks/sasp/Quadratic_Interpolation_Spectral_Peaks.html).
+- G. Hunter. *Exponential Moving Average (EMA) Filters*. [Available online](https://blog.mbedded.ninja/programming/signal-processing/digital-filters/exponential-moving-average-ema-filter/).
 
 ---
 
