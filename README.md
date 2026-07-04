@@ -1,10 +1,9 @@
 # Acoustic Tracking and Binary Detection
 
 Real-time acoustic **Direction-of-Arrival (DOA)** tracking and **tone detection** on a
-motorized pan–tilt platform. A four-microphone array estimates the bearing of the
-dominant sound source, and an STM32 microcontroller steers the platform to face it.
-In parallel, the system performs **binary (present / absent) detection** of narrowband
-tones.
+motorized pan–tilt platform. The system performs **binary (present / absent) detection** of narrowband
+tones. A four-microphone array estimates the direction of the
+dominant sound focusing around the detected frequency, and an STM32 microcontroller steers the platform to face it.
 
 > **Project 25-1-1-3234** — Iby and Aladar Fleischman Faculty of Engineering, Tel Aviv University.
 
