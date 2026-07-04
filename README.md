@@ -141,9 +141,7 @@ pip install numpy scipy pyaudio pyserial matplotlib keyboard
 ```
 
 **Control tier (firmware):**
-
-- STM32CubeIDE (or arm-none-eabi toolchain) to build and flash the firmware
-- STM32 HAL and the L6474 motor-control board-support package
+Follow the installation guidelines layed out in 
 
 ## Setup
 
