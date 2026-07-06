@@ -116,6 +116,7 @@ pip install numpy scipy pyaudio pyserial matplotlib
 ```
 
 **Control tier (firmware):**
+
 Follow the installation guidelines laid out in the [X-NUCLEO Installation Guide](docs/x-nucleo-installation-guide.pdf). After extracting the x-cube-spn1.zip onto your PC, replace the main.c, l6474_target_config.h and stm32f4xx_it.c files with the ones from this repo.  
 
 ## Setup
