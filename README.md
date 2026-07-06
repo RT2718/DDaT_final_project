@@ -58,7 +58,7 @@ estimator can be validated against an exact ground truth.
 - **Velocity-mode PID** motor control with anti-windup, derivative limiting, slew-rate
   limiting, and shortest-path angle wrapping.
 - **Race-free serial reception** on the microcontroller via a double-buffered
-  (ping-pong) interrupt service routine, with a heartbeat timeout that parks the
+  (ping-pong) interrupt service routine, with a heartbeat timeout that stops the
   platform if the link is lost.
 - **Built-in simulation harness** with circle / arc / spiral test trajectories and
   automatic error statistics (RMSE, MAE, max error).
