@@ -15,7 +15,6 @@ dominant sound focusing around the detected frequency, and an STM32 microcontrol
 - [Key features](#key-features)
 - [How it works](#how-it-works)
 - [Hardware](#hardware)
-- [Repository structure](#repository-structure)
 - [Requirements](#requirements)
 - [Setup](#setup)
 - [Usage](#usage)
@@ -60,14 +59,14 @@ estimator can be validated against an exact ground truth.
 - **Race-free serial reception** on the microcontroller via a double-buffered
   (ping-pong) interrupt service routine, with a heartbeat timeout that stops the
   platform if the link is lost.
-- **Built-in simulation harness** with circle / arc / spiral test trajectories and
+- **Built-in simulation** with circle / arc / spiral test trajectories and
   automatic error statistics (RMSE, MAE, max error).
 
 ## How it works
 
 ```
  Microphone array ──USB──▶  Host PC  (Python, perception tier)
-                            ├─ tone detection  (CFAR + hysteresis) ─▶ f*
+                            ├─ tone detection  (statistical thresholding + hysteresis) ─▶ f*
                             ├─ band-pass around f*
                             ├─ GCC-PHAT time-delay per mic pair
                             ├─ direction solve  (azimuth, elevation)
@@ -93,34 +92,13 @@ estimator can be validated against an exact ground truth.
 |---|---|
 | Microphone array | ReSpeaker USB Mic Array — four MEMS microphones in a circular layout |
 | Host computer | Any PC with a USB port and a serial connection to the microcontroller |
-| Microcontroller | STM32 Nucleo development board *(confirm exact part number)* |
+| Microcontroller | STM32 Nucleo development board with an STM32F401RE microcontroller |
 | Motor driver | X-NUCLEO-IHM01A1 stepper-driver expansion (L6474), one driver per axis |
 | Actuators | Two stepper motors (pan and tilt) on a pan–tilt rig carrying the array |
 
 > Pan and tilt use different gear ratios (≈ 3345 microsteps/rev on pan, 16576 on tilt),
 > which the firmware accounts for in its step-to-angle conversion.
 
-## Repository structure
-
-> Adjust to match your actual repository; the Python module names below are the ones
-> used in the source.
-
-```
-.
-├── perception/                 # Python perception tier
-│   ├── main.py                 # entry point (live or simulation)
-│   ├── micArray.py             # acquisition, simulation, visualisation, statistics
-│   ├── signal_processing.py    # GCC-PHAT, direction solve, smoothing
-│   ├── constants.py            # array geometry, sample rate, thresholds, tuning
-│   ├── robotics.py             # serial interface to the microcontroller
-│   └── gui/                    # supervising GUI  (fill in)
-├── firmware/                   # STM32 control tier (C)
-│   ├── Core/                   # main.c (UART ISR + velocity-mode PID), HAL config
-│   ├── Drivers/                # STM32 HAL + L6474 / motor-control BSP
-│   └── *.ioc                   # STM32CubeIDE project
-├── docs/                       # project report and figures
-└── README.md
-```
 
 ## Requirements
 
@@ -131,12 +109,11 @@ estimator can be validated against an exact ground truth.
 - `pyaudio`
 - `pyserial`
 - `matplotlib`
-- `keyboard`
 
 Install them with:
 
 ```bash
-pip install numpy scipy pyaudio pyserial matplotlib keyboard
+pip install numpy scipy pyaudio pyserial matplotlib
 ```
 
 **Control tier (firmware):**
@@ -147,14 +124,14 @@ Follow the installation guidelines laid out in the [X-NUCLEO Installation Guide]
 1. **Wiring.** Connect the ReSpeaker array to the host PC by USB. Connect the STM32 to
    the host by USB/serial. Mount the X-NUCLEO-IHM01A1 on the Nucleo board and connect
    the pan and tilt stepper motors (see [X-NUCLEO Installation Guide](docs/x-nucleo-installation-guide.pdf)). 
-2. **Firmware.** Open the `firmware/` project in STM32CubeIDE, build, and flash it to
+2. **Firmware.** Open the project in STM32CubeIDE, as instructed in the provided guide, build, and flash it to
    the board.
 3. **Perception.** Install the Python dependencies (above) and set the serial port for
    your machine in `constants.py` / `robotics.py`.
 
 ## Usage
 
-### Simulation (no hardware required)
+### Simulation
 
 Validate the DOA pipeline against a known ground truth. In `main.py`, choose a
 trajectory and run:
