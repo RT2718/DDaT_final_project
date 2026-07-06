@@ -19,7 +19,6 @@ dominant sound focusing around the detected frequency, and an STM32 microcontrol
 - [Setup](#setup)
 - [Usage](#usage)
 - [Serial protocol](#serial-protocol)
-- [Configuration](#configuration)
 - [Results](#results)
 - [Further work](#further-work)
 - [Authors](#authors)
@@ -133,73 +132,39 @@ Follow the installation guidelines laid out in the [X-NUCLEO Installation Guide]
 
 ### Simulation
 
-Validate the DOA pipeline against a known ground truth. In `main.py`, choose a
-trajectory and run:
-
-```python
-# main.py
-mic.run(simulate=True, trajectory='arc')   # 'circle' | 'arc' | 'spiral'
-```
-
-```bash
-python main.py
-```
+Validate the DOA pipeline against a known ground truth. In `main.py`, set SIMULATE = True and choose a
+trajectory by setting SIM_TRAJECTORY to one of the following options:
 
 - **circle** — azimuth sweeps 360° at constant elevation (azimuth tracking).
 - **arc** — fixed azimuth, elevation oscillates (elevation tracking).
 - **spiral** — both angles vary together.
 
 The run executes one full period of the trajectory, plots the live tracking error, and
-prints summary statistics (mean, MAE, RMSE, std, max) for azimuth and elevation. Press
-`w` to stop early. The trajectory generator is general — any custom `(phi(t), theta(t))`
+prints summary statistics (mean, MAE, RMSE, std, max) for azimuth and elevation. The trajectory generator is general — any custom `(phi(t), theta(t))`
 path can be added.
 
 ### Live tracking
 
-With the array connected and the firmware running:
-
-```python
-# main.py
-mic.run(simulate=False)
-```
+With the array connected and the firmware running, set SIMULATE = False and run the code.
 
 The system selects the ReSpeaker device automatically, detects the dominant persistent
-tone, estimates its direction, and streams the bearing to the microcontroller, which
-steers the platform. Press `w` to stop.
+tone, estimates its direction, and streams the angles to the microcontroller, which
+steers the platform. 
 
 ### Binary tone detection
 
 The detector flags a narrowband tone once it persists above the local adaptive
-threshold for the required duration, and logs when each tone appears and vanishes. The
-target tones used in this project are **400, 800, 1200, and 1600 Hz**.
+threshold for the required duration, and logs when each tone appears and vanishes.
 
 ## Serial protocol
 
-The host streams each bearing to the microcontroller as a newline-terminated ASCII
+The host streams each bearing in radians to the microcontroller as a newline-terminated ASCII
 line:
 
 ```
 P:<phi>,T:<theta>\n
 ```
-
-- `<phi>` — azimuth, radians
-- `<theta>` — elevation, radians
-- 115200 baud, 8-N-1
-
-The format is human-readable and self-delimiting, so the receiver can resynchronise
-cleanly after a corrupted line.
-
-## Configuration
-
-Key parameters live in `constants.py`:
-
-- **Array geometry** — microphone radius / positions, used by the direction solve.
-- **Audio** — sample rate and block (chunk) size.
-- **Detection** — threshold factor and persistence length for the tone detector.
-- **Smoothing** — the EMA factor for the bearing.
-
-Motor tuning (PID gains, slew/derivative limits, gear ratios, heartbeat timeout) lives
-in the firmware.
+- 115200 baud
 
 ## Results
 
@@ -210,12 +175,15 @@ in the firmware.
 | Angular tolerance | within 5° |
 | Noise rejection (front-end) | > 6 dB |
 | Reaction time | < 1 s |
-| Steady-state pointing error | sub-degree |
+| Steady-state pointing error | within required range |
 
 ## Further work
 
 - Use an array with more microphones and greater spacing to improve angular resolution.
-- Extend the detector and tracker to multiple simultaneous sources.
+- Use mic array with higher sampling rate.
+- Integrating a Kalman filter.
+- Stronger motors.
+- Experiment with the Lawson norm minimization and whitening additional modes we have implemented in the perception code.
 
 ## Authors
 
