@@ -20,7 +20,7 @@ FFT_SIZE = BLOCKSIZE
 FREQ_L = 300.0
 FREQ_H = 2000.0
 
-freq_filtering = False  # Force this to True so our mask is applied
+freq_filtering = False  # kept this at False, used butterworth filtering instead
 whitening = False
 lawson = False
 butter_filter = True
